@@ -56,7 +56,7 @@ describe("Agora vamos aos testes sérios #soQueNao", function() {
 	    });
 
 	  it("deve verificar se a variavel armazena value", function() {
-	    expect(disciplina.buscarDisciplina).toHaveBeenCalledWith('value');
+	    expect(disciplina.buscarDisciplina).toHaveBeenCalledWith("Validação e Testes");
 	  });
 
 	  it("deve verificar se o retorno do metodo buscarDisciplina dispara o Error", function() {
