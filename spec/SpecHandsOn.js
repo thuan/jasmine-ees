@@ -18,22 +18,22 @@ describe("HandsON@thuansaraiva - Suites, Specs e Matchers - EES@UECE", function(
 	});
 });
 
-describe("HandsON@thuansaraiva - Caso de teste da nossa Disciplina atual - EES@UECE", function() {
+describe("HandsON@thuansaraiva - Caso de teste da nossa Disciplina - EES@UECE", function() {
 
 	beforeEach(function() {
 		disciplina = {
 			nome: "Validação e Testes",
 			professor: "Camila Maia Loiola",
 			categorias: ["Obrigatória","Opcional"],
-			horasAula: 40,
+			horasAula: 30,
 			disponibilidade: false,
 			
-			getNome: function() {
-				return this.nome;
-			},
-
 			setNome: function(novoNome) {
 				this.nome = novoNome;
+			},
+
+			getNome: function() {
+				return this.nome;
 			},
 
 			verificarDisponibilidade: function() {
@@ -46,7 +46,7 @@ describe("HandsON@thuansaraiva - Caso de teste da nossa Disciplina atual - EES@U
 		},
 
 		this.addMatchers({
-			disponivel: function () {
+			disponibilizar: function () {
 				this.disponibilidade = true;
 				return this.disponibilidade;
 			}
@@ -63,40 +63,28 @@ describe("HandsON@thuansaraiva - Caso de teste da nossa Disciplina atual - EES@U
 	});
 
 	it("deve verificar se o nome da disciplina é 'Validação e teste'", function() {
+		expect(disciplina.nome).toEqual('Validação e Testes');
+	});
+
+	it("deve verificar se o numero de categorias é maior do que 1", function() {
 		expect(disciplina.categorias.length).toBeGreaterThan(1);
 	});
 
-	it("deve atribuir um novo nome para a Disciplina utilizando um 'Spy'", function() {	
-		expect(disciplina.getNome).toHaveBeenCalledWith("Metodologias de Teste");
+	it("deve atribuir o nome para a nova Disciplina 'Padroes de Projeto' utilizando um 'Spy'", function() {
+		spyOn(disciplina, "getNome").andCallThrough();
+		disciplina.setNome("Padroes de Projeto");
+		novoNome = disciplina.getNome();
+		expect(novoNome).toEqual('Padroes de Projeto');
 	});
 
-	it("deve verificar se será lançada exceção para uma disciplina que não será ofertada", function() {
-		expect(disciplina.verificarDisponibilidade).toBeTruthy();
+	it("deve verificar se será lançada exceção para uma disciplina quando não for ofertada", function() {
+		expect(function () {
+			disciplina.verificarDisponibilidade();
+		}).toThrow("Disciplina não será ofertada");
 	});
 
-	it("deve verificar a disponibilidade da disciplina para cadastro de alunos", function() {
-		expect(disciplina.disponibilidade).disponivel();
+	it("deve forçar a disponibilidade de uma disciplina", function() {
+		expect(disciplina.disponibilidade).disponibilizar();
 	});
 
-	xit("Deve verificar se uma disciplina e seus metodos foram definidos", function() {
-		expect(disciplina.informarEstado).toHaveBeenCalled();
-	});
-
-	xit("deve verificar se a variavel armazena value", function() {
-		expect(disciplina.buscarDisciplina).toHaveBeenCalledWith("Validação e Testes");
-	});
-
-	xit("deve verificar se o retorno do metodo buscarDisciplina dispara o Error", function() {
-		expect(disciplina.buscarDisciplina).not.toThrow();
-	});
-
-	xit("Deve retornar o nome da Disciplina e o nome do professor", function() {
-		expect(disciplina.setNome).toHaveBeenCalled();
-		expect(disciplina.setProf).toHaveBeenCalled(); 
-	});
-
-	xit("Deve retornar o nome da Disciplina e o nome do professor - UTILIZANDO SPIES", function() {
-		expect(disciplina.setProf).toHaveBeenCalledWith("Camila Maia");
-		expect(disciplina.setNome).toHaveBeenCalledWith("Validacao e Testes");
-	});
 });
