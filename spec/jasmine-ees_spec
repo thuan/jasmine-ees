@@ -24,7 +24,7 @@ describe("HandsON@thuansaraiva - Caso de teste da nossa Disciplina - EES@UECE", 
 		disciplina = {
 			nome: "Validação e Testes",
 			professor: "Camila Maia Loiola",
-			categorias: ["Obrigatória","Opcional"],
+			categoria: ["Obrigatória","Presencial"],
 			horasAula: 30,
 			disponibilidade: false,
 			
@@ -35,6 +35,7 @@ describe("HandsON@thuansaraiva - Caso de teste da nossa Disciplina - EES@UECE", 
 			getNome: function() {
 				return this.nome;
 			},
+
 
 			verificarDisponibilidade: function() {
 				if (this.horasAula <= 30 && this.disponibilidade !== true) 
@@ -56,31 +57,30 @@ describe("HandsON@thuansaraiva - Caso de teste da nossa Disciplina - EES@UECE", 
 	it("deve verificar tipos dos componentes dos nossos testes", function() {
 		expect(disciplina).toEqual(jasmine.any(Object));
 		expect(disciplina.professor, disciplina.nome).toEqual(jasmine.any(String));
-		expect(disciplina.categorias).toEqual(jasmine.any(Array));
+		expect(disciplina.categoria).toEqual(jasmine.any(Array));
 		expect(disciplina.horasAula).toEqual(jasmine.any(Number));
 		expect(disciplina.verificarDisponibilidade).toEqual(jasmine.any(Function));
 		expect(disciplina.disponibilidade).toBeFalsy();
+	});
+
+	it("deve atribuir o nome para a nova Disciplina 'Padroes de Projeto' utilizando um 'Spy'", function() {
+		spyOn(disciplina, "getNome").andCallThrough();
+		disciplina.setNome("Padroes de Projeto");
+		expect(disciplina.nome).toEqual('Padroes de Projeto');
 	});
 
 	it("deve verificar se o nome da disciplina é 'Validação e teste'", function() {
 		expect(disciplina.nome).toEqual('Validação e Testes');
 	});
 
-	it("deve verificar se o numero de categorias é maior do que 1", function() {
-		expect(disciplina.categorias.length).toBeGreaterThan(1);
-	});
-
-	it("deve atribuir o nome para a nova Disciplina 'Padroes de Projeto' utilizando um 'Spy'", function() {
-		spyOn(disciplina, "getNome").andCallThrough();
-		disciplina.setNome("Padroes de Projeto");
-		novoNome = disciplina.getNome();
-		expect(novoNome).toEqual('Padroes de Projeto');
-	});
-
 	it("deve verificar se será lançada exceção para uma disciplina quando não for ofertada", function() {
 		expect(function () {
 			disciplina.verificarDisponibilidade();
 		}).toThrow("Disciplina não será ofertada");
+	});
+
+	it("deve verificar se o numero de categoria é maior do que 1", function() {
+		expect(disciplina.categoria.length).toBeGreaterThan(1);
 	});
 
 	it("deve forçar a disponibilidade de uma disciplina", function() {
